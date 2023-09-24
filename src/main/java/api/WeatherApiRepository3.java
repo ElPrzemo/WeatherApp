@@ -1,5 +1,6 @@
 package api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Weather;
 
 import java.io.BufferedReader;
@@ -36,9 +37,13 @@ public class WeatherApiRepository3 implements WeatherApiClient {
                 response.append(line);
             }
             reader.close();
-            return response.toString();
+
+            // Parsowanie JSON do obiektu Weather za pomocą Jackson ObjectMapper
+            ObjectMapper objectMapper = new ObjectMapper();
+            Weather weatherData = objectMapper.readValue(response.toString(), Weather.class);
+
+            return weatherData;
         } else {
             throw new IOException("Błąd zapytania do API pogodowego: " + responseCode);
         }
-    }
-}
+    }}
