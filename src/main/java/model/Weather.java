@@ -1,4 +1,4 @@
-package api.objects;
+package model;
 
 import javax.xml.stream.Location;
 import java.time.LocalDate;
@@ -12,6 +12,9 @@ import java.time.LocalDate;
         private int windSpeed;
         private Location locationWeather;
         private LocalDate date;
+
+        public Weather() {
+        }
 
         public Weather(LocalDate date, double temperature, int pressure, double humidity, double windDirection, int windSpeed, Location locationWeather) {
             this.date = date;
