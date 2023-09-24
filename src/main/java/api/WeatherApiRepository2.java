@@ -1,6 +1,8 @@
 package api;
 
 
+import model.Weather;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,12 +13,12 @@ import java.time.LocalDate;
 public class WeatherApiRepository2 implements WeatherApiClient  {
     private final String apiKey;
 
-    public WeatherApiRepository(String apiKey) {
+    public WeatherApiRepository2(String apiKey) {
         this.apiKey = apiKey;
     }
 
-    public String getWeather(String city, LocalDate date) throws IOException {
-        String apiUrl = "http://api.weatherstack.com/historical?city=" + city + "&date=" + date + "&apiKey=" + apiKey+ "&hourly=0";
+    public Weather getWeather(String city, LocalDate date) throws IOException {
+        String apiUrl = "http://api.weatherstack.com/historical?city=" + city + "&date=" + date + "&apiKey=" + apiKey + "&hourly=0";
 
         URL url = new URL(apiUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

@@ -1,52 +1,59 @@
 package processor;
 
 import api.WeatherApiRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Weather;
 import weatherDB.WeatherDatabase;
 
-import javax.xml.stream.Location;
 import java.io.IOException;
 import java.time.LocalDate;
 
 public class WeatherDataProcessor {
 
-    WeatherDatabase weatherDatabase = WeatherDatabase.getInstance();
-    Location location;
+    private WeatherDatabase weatherDatabase = WeatherDatabase.getInstance();
     private final WeatherApiRepository apiRepository1;
     private final WeatherApiRepository apiRepository2;
     private final WeatherApiRepository apiRepository3;
 
     public WeatherDataProcessor(String apiKey1, String apiKey2, String apiKey3) {
         this.apiRepository1 = new WeatherApiRepository(apiKey1);
-        this.apiRepository2 = new WeatherApiRepository2(apiKey2);
-        this.apiRepository3 = new WeatherApiRepository3(apiKey3);
+        this.apiRepository2 = new WeatherApiRepository(apiKey2);
+        this.apiRepository3 = new WeatherApiRepository(apiKey3);
     }
 
     public Weather getAveragedWeatherData(String city, LocalDate date) throws IOException {
-        Weather dataFromSource1 = apiRepository1.getWeather(city, date);
-        Weather dataFromSource2 = apiRepository2.getWeather(city, date);
-        Weather dataFromSource3 = apiRepository3.getWeather(city, date);
+        String jsonDataFromSource1 = String.valueOf(apiRepository1.getWeather(city, date));
+        String jsonDataFromSource2 = String.valueOf(apiRepository2.getWeather(city, date));
+        String jsonDataFromSource3 = String.valueOf(apiRepository3.getWeather(city, date));
         Weather averagedData = new Weather();
 
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        double averagedTemperature = (dataFromSource1.getTemperature() + dataFromSource2.getTemperature() + dataFromSource3.getTemperature()) / 3.0;
-        double averagedPressure = (dataFromSource1.getPressure() + dataFromSource2.getPressure() + dataFromSource3.getPressure()) / 3.0;
-        int averagedHumidity = (int) ((dataFromSource1.getHumidity() + dataFromSource2.getHumidity() + dataFromSource3.getHumidity()) / 3);
-        String averagedWindDirection = calculateAveragedWindDirection(dataFromSource1, dataFromSource2, dataFromSource3);
-        int averagedWindSpeed = (dataFromSource1.getWindSpeed() + dataFromSource2.getWindSpeed() + dataFromSource3.getWindSpeed()) / 3;
+        try {
+            Weather dataFromSource1 = objectMapper.readValue(jsonDataFromSource1, Weather.class);
+            Weather dataFromSource2 = objectMapper.readValue(jsonDataFromSource2, Weather.class);
+            Weather dataFromSource3 = objectMapper.readValue(jsonDataFromSource3, Weather.class);
 
+            double averagedTemperature = (dataFromSource1.getTemperature() + dataFromSource2.getTemperature() + dataFromSource3.getTemperature()) / 3.0;
+            double averagedPressure = (dataFromSource1.getPressure() + dataFromSource2.getPressure() + dataFromSource3.getPressure()) / 3.0;
+            int averagedHumidity = (int) ((dataFromSource1.getHumidity() + dataFromSource2.getHumidity() + dataFromSource3.getHumidity()) / 3);
+            int averagedWindSpeed = (dataFromSource1.getWindSpeed() + dataFromSource2.getWindSpeed() + dataFromSource3.getWindSpeed()) / 3;
 
-        averagedData.setTemperature(averagedTemperature);
-        averagedData.setPressure(averagedPressure);
-        averagedData.setHumidity(averagedHumidity);
-        averagedData.setWindSpeed(averagedWindSpeed); /////////// JAK UŚREDNIĆ KIERUNEK WIATRU
-        averagedData.setWindDirection(averagedWindDirection);
-        averagedData.setLocation(city);
-        averagedData.setDate(date);
+            averagedData.setTemperature(averagedTemperature);
+            averagedData.setPressure(averagedPressure);
+            averagedData.setHumidity(averagedHumidity);
+            averagedData.setWindSpeed(averagedWindSpeed);
 
-        weatherDatabase.addToDatabase(model.Location, averagedData);
+            // Kierunek wiatru - możesz to dodać później
+            // String averagedWindDirection = calculateAveragedWindDirection(dataFromSource1, dataFromSource2, dataFromSource3);
+            // averagedData.setWindDirection(averagedWindDirection);
+
+            weatherDatabase.addToDatabase(new model.Location(0, 0, null, null), averagedData);
+
+        } catch (IOException e) {
+            throw new IOException("Błąd podczas przetwarzania danych pogodowych", e);
+        }
+
         return averagedData;
-
     }
 }
-

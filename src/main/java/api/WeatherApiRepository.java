@@ -1,5 +1,8 @@
 package api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import model.Weather;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,7 +17,7 @@ public class WeatherApiRepository implements WeatherApiClient {
         this.apiKey = apiKey;
     }
 
-    public String getWeather(String city, LocalDate date) throws IOException {
+    public Weather getWeather(String city, LocalDate date) throws IOException {
         String apiUrl = "http://api.weatherstack.com/historical?city=" + city + "&date=" + date + "&apiKey=" + apiKey + "&hourly=0";
 
         URL url = new URL(apiUrl);
@@ -32,7 +35,12 @@ public class WeatherApiRepository implements WeatherApiClient {
                 response.append(line);
             }
             reader.close();
-            return response.toString();
+
+            // Parsowanie JSON do obiektu Weather za pomocą Jackson ObjectMapper
+            ObjectMapper objectMapper = new ObjectMapper();
+            Weather weatherData = objectMapper.readValue(response.toString(), Weather.class);
+
+            return weatherData;
         } else {
             throw new IOException("Błąd zapytania do API pogodowego: " + responseCode);
         }

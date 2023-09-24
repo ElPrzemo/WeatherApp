@@ -1,22 +1,21 @@
 package model;
 
-import javax.xml.stream.Location;
 import java.time.LocalDate;
 
 
     public class Weather {
         private double temperature;
-        private int pressure;
+        private double pressure;
         private double humidity;
         private double windDirection;
         private int windSpeed;
-        private Location locationWeather;
+        private String locationWeather;
         private LocalDate date;
 
         public Weather() {
         }
 
-        public Weather(LocalDate date, double temperature, int pressure, double humidity, double windDirection, int windSpeed, Location locationWeather) {
+        public Weather(LocalDate date, double temperature, int pressure, double humidity, double windDirection, int windSpeed, String locationWeather) {
             this.date = date;
             this.temperature = temperature;
             this.pressure = pressure;
@@ -34,7 +33,7 @@ import java.time.LocalDate;
             return temperature;
         }
 
-        public int getPressure() {
+        public double getPressure() {
             return pressure;
         }
 
@@ -50,7 +49,7 @@ import java.time.LocalDate;
             return windSpeed;
         }
 
-        public Location getLocationWeather() {
+        public String getLocationWeather() {
             return locationWeather;
         }
 
@@ -58,7 +57,7 @@ import java.time.LocalDate;
             this.temperature = temperature;
         }
 
-        public void setPressure(int pressure) {
+        public void setPressure(double pressure) {
             this.pressure = pressure;
         }
 
@@ -74,7 +73,7 @@ import java.time.LocalDate;
             this.windSpeed = windSpeed;
         }
 
-        public void setLocationWeather(Location locationWeather) {
+        public void setLocation(String locationWeather) {
             this.locationWeather = locationWeather;
         }
 
@@ -86,12 +85,11 @@ import java.time.LocalDate;
         public String toString() {
             return "Weather{" +
                     "date=" + date +
-                    ", temperature=" + temperature +
-                    ", pressure=" + pressure +
-                    ", humidity=" + humidity +
-                    ", windDirection=" + windDirection +
-                    ", windSpeed=" + windSpeed +
+                    ", temperature=" + temperature + "°C" +
+                    ", pressure=" + pressure + " hPa" +
+                    ", humidity=" + humidity + "%" +
+                    ", windDirection=" + windDirection + "°" +
+                    ", windSpeed=" + windSpeed + " km/h" +
                     '}';
-        }
-    }
+        }}
 
