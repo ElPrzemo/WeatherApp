@@ -49,6 +49,7 @@ public class Menu {
 
         //sprawdzenie czy miasto jest zawarte w bazie danych
        // if userInput.toUpperCase().equals()
+        //sdfsd
 
     }
 
