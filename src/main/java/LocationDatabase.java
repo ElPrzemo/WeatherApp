@@ -6,13 +6,14 @@ public class LocationDatabase {
 
     public void addLocation(Location location) {
         locations.add(location);
-    }
 
+    }public void removeLocation(Location location) {
+        locations.remove(location);
+    }
     public Set<Location> getLocations() {
         return locations;
     }
 
-    // Interfejs do sortowania po miastach
     public interface LocationComparator {
         List<Location> sortLocationsByCity(Set<Location> locations);
     }
