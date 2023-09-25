@@ -11,10 +11,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 
-public class WeatherApiRepository2 implements WeatherApiClient  {
+public class WeatherApiHandler2 implements WeatherApiClient  {
     private final String apiKey;
 
-    public WeatherApiRepository2(String apiKey) {
+    public WeatherApiHandler2(String apiKey) {
         this.apiKey = apiKey;
     }
 

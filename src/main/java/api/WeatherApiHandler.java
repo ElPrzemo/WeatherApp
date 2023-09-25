@@ -10,12 +10,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 
-
-
-public class WeatherApiRepository3 implements WeatherApiClient {
+public class WeatherApiHandler implements WeatherApiClient {
     private final String apiKey;
 
-    public WeatherApiRepository3(String apiKey) {
+    public WeatherApiHandler(String apiKey) {
         this.apiKey = apiKey;
     }
 
@@ -46,4 +44,5 @@ public class WeatherApiRepository3 implements WeatherApiClient {
         } else {
             throw new IOException("Błąd zapytania do API pogodowego: " + responseCode);
         }
-    }}
+    }
+}

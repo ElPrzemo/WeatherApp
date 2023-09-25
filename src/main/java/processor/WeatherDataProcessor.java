@@ -1,6 +1,6 @@
 package processor;
 
-import api.WeatherApiRepository;
+import api.WeatherApiHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Weather;
 import commonDB.WeatherDatabase;
@@ -11,14 +11,14 @@ import java.time.LocalDate;
 public class WeatherDataProcessor {
 
     private WeatherDatabase weatherDatabase = WeatherDatabase.getInstance();
-    private final WeatherApiRepository apiRepository1;
-    private final WeatherApiRepository apiRepository2;
-    private final WeatherApiRepository apiRepository3;
+    private final WeatherApiHandler apiRepository1;
+    private final WeatherApiHandler apiRepository2;
+    private final WeatherApiHandler apiRepository3;
 
     public WeatherDataProcessor(String apiKey1, String apiKey2, String apiKey3) {
-        this.apiRepository1 = new WeatherApiRepository(apiKey1);
-        this.apiRepository2 = new WeatherApiRepository(apiKey2);
-        this.apiRepository3 = new WeatherApiRepository(apiKey3);
+        this.apiRepository1 = new WeatherApiHandler(apiKey1);
+        this.apiRepository2 = new WeatherApiHandler(apiKey2);
+        this.apiRepository3 = new WeatherApiHandler(apiKey3);
     }
 
     public Weather getAveragedWeatherData(String city, LocalDate date) throws IOException {
