@@ -3,7 +3,7 @@ package processor;
 import api.WeatherApiRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Weather;
-import weatherDB.WeatherDatabase;
+import commonDB.WeatherDatabase;
 
 import java.io.IOException;
 import java.time.LocalDate;

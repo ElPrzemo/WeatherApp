@@ -2,7 +2,7 @@ package service;
 
 import model.Location;
 import model.Weather;
-import weatherDB.WeatherDBRepository;
+import commonDB.WeatherDBRepository;
 
 import java.time.LocalDate;
 

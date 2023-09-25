@@ -1,4 +1,4 @@
-package weatherDB;
+package commonDB;
 
 import model.Location;
 import model.Weather;
