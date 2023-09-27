@@ -1,15 +1,25 @@
 package commonDB;
 
 import model.Location;
+
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class LocationDatabase implements LocationRepository {
+    private static LocationDatabase instance;
     private Set<Location> locationSet;
 
-    public LocationDatabase() {
+    private LocationDatabase() {
+        // Użyjemy komparatora do sortowania po City
         locationSet = new TreeSet<>(new CityComparator());
+    }
+
+    public static LocationDatabase getInstance() {
+        if (instance == null) {
+            instance = new LocationDatabase();
+        }
+        return instance;
     }
 
     @Override
@@ -27,12 +37,11 @@ public class LocationDatabase implements LocationRepository {
         return locationSet;
     }
 
-    private class CityComparator implements Comparator<Location> {
+    // Komparator sortujący według City
+    private static class CityComparator implements Comparator<Location> {
         @Override
         public int compare(Location location1, Location location2) {
-            String city1 = String.valueOf(location1.getCity());
-            String city2 = String.valueOf(location2.getCity());
-            return city1.compareTo(city2);
+            return location1.getCity().compareTo(location2.getCity());
         }
     }
 }

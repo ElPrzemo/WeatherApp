@@ -1,6 +1,6 @@
 package controller;
 
-import commonDB.LocationRepository;
+import commonDB.LocationDatabase; // Importujesz odpowiednią klasę bazy danych
 import model.Location;
 import service.LocationService;
 
@@ -9,8 +9,9 @@ import java.util.Set;
 public class LocationController {
     private final LocationService locationService;
 
-    public LocationController(LocationRepository locationRepository) {
-        this.locationService = new LocationService(locationRepository);
+    public LocationController() {
+        // Używasz metody getInstance() do uzyskania instancji LocationDatabase
+        this.locationService = new LocationService(LocationDatabase.getInstance());
     }
 
     public void addLocation(Location location) {
@@ -25,4 +26,3 @@ public class LocationController {
         return locationService.getAllLocations();
     }
 }
-

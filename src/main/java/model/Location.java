@@ -6,21 +6,29 @@ public class Location {
 
     private static AtomicInteger idCounter = new AtomicInteger(0);
     private int id;
+    private String city;
     private double latitude;
     private double longitude;
-    private Country country;
-    private City city;
+    private String country;
 
-    public Location(double latitude, double longitude, Country country, City city) {
+    public Location(String city, String country, double latitude, double longitude ) {
         this.id = idCounter.incrementAndGet();
+        this.city = city;
         this.latitude = latitude;
         this.longitude = longitude;
         this.country = country;
-        this.city = city;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
     }
 
     public double getLatitude() {
@@ -29,13 +37,5 @@ public class Location {
 
     public double getLongitude() {
         return longitude;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public City getCity() {
-        return city;
     }
 }

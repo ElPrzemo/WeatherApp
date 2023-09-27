@@ -48,7 +48,7 @@ public class WeatherDataProcessor {
             // String averagedWindDirection = calculateAveragedWindDirection(dataFromSource1, dataFromSource2, dataFromSource3);
             // averagedData.setWindDirection(averagedWindDirection);
 
-            weatherDatabase.addToDatabase(new model.Location(0, 0, null, null), averagedData);
+            weatherDatabase.addToDatabase(new model.Location(null, null, 0, 0), averagedData);
 
         } catch (IOException e) {
             throw new IOException("Błąd podczas przetwarzania danych pogodowych", e);
